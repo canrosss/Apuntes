@@ -18,7 +18,7 @@ Sólo necesitas un navegador
 
 ## Autor
 
-* **Carlos M. Garcia Rdz** - *Initial version* - [ <<More about>> ](https://canrosss.github.io/)
+* **Carlos M. Garcia Rdz** - *Initial version* - [ << More about >> ](https://canrosss.github.io/)
 
 ## License
 
