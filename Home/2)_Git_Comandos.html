@@ -226,6 +226,150 @@ origin  <a href="https://github.com/user/repo.git" title="https://github.com/use
 origin  <a href="https://github.com/user/repo.git" title="https://github.com/user/repo.git" class="https">https://github.com/user/repo.git</a> (push)
 </p>
 
+<p>
+---<br>
+En caso de haber enviado cambios desde otro repo!
+</p>
+
+<p>
+Resumen (asumiendo que estás en master):<br>
+Si no te importa crear un commit de merge, entonces esto alcanza:
+</p>
+
+<p>
+git pull<br>
+git push<br>
+Si preferís evitar el commit de merge:
+</p>
+
+<p>
+git fetch<br>
+git rebase origin/master<br>
+git push<br>
+Explicación<br>
+En git, un commit es el estado de todo el repositorio en un momento dado. Además, cada desarrollador tiene una copia de todo y (si usan algo como github) existe un repositorio central. En este escenario, todos los desarrolladores hacen git pull y git push al repositorio central y ese es el único remoto. Entonces, imaginemos que inicialmente el estado de tu repositorio remoto es:
+</p>
+
+<p>
+<img src="../img/Fhi1n.png">
+</p>
+
+<br>
+
+<p>
+y que hiciste git pull sin problemas. Tu repositorio local tiene exactamente el mismo contenido que el repositorio remoto.
+</p>
+
+<p>
+Vos estás trabajando feliz, pero Martín (otro desarrollador del equipo) hace git push... entonces el estado del repositorio remoto pasa a ser este:
+</p>
+
+<p>
+<img src="../img/CF3oK.png">
+</p>
+
+<p>
+vos terminás de trabajar en el bug que estás arreglando y hacés git commit... en ese momento, en tu repositorio local tenés lo siguiente:
+</p>
+
+<p>
+<img src="../img/GCJc9.png">
+</p>
+
+<p>
+hasta ahí, todo perfecto... pero cuando hacés git push, falla con el mensaje de error de la pregunta. Esto pasa porque git no sabe qué hacer con el commit 4... supuestamente va después del commit 2, pero en el repositorio remoto, está el 3 después del 2.
+</p>
+
+<p>
+La versión común<br>
+Una opción es hacer:
+</p>
+
+<p>
+git pull<br>
+Esto lo que hace es traer los cambios del repositorio remoto a tu equipo e intentar hacer un merge. Si no hay conflictos, el estado final en tu equipo es el siguiente:
+</p>
+
+<p>
+<img src="../img/2kf2d.png">
+</p>
+
+<p>
+el próximo paso es subir tus cambios al remoto haciendo:
+</p>
+
+<p>
+git push<br>
+y si el molesto de Martín no subió otro cambio, entonces va a funcionar sin problemas. Si falla por la misma razón, basta con repetir el procedimiento.
+</p>
+
+<p>
+La versión de la brigada anti-merge<br>
+Somos varios los que vemos con malos ojos tener muchos commits de merge. Por qué? porque no agregan información. Por suerte, para los loquitos como yo, existe una forma de hacer casi lo mismo pero más prolijo.
+</p>
+
+<p>
+Primero ejecutamos:
+</p>
+
+<p>
+git fetch<br>
+git fetch trae los cambios del remoto pero sin tocar las branches... una vez que hacés git fetch, esto es lo que queda en tu repositorio:
+</p>
+
+<p>
+<img src="../img/K2wjE.png">
+</p>
+
+<p>
+esto quiere decir que:
+</p>
+
+<p>
+master (la branch en la que trabajás normalmente) sigue apuntando a tu commit<br>
+git sabe que el remoto (origin/master) apunta al commit 3<br>
+si mirás el código en tu equipo, no vas a ver rastros del commit 3<br>
+entonces... el paso mágico es:
+</p>
+
+<p>
+git rebase origin/master<br>
+cuando escribís eso, git se para en origin/master (el commit 3) y repite los cambios que se hicieron dentro del commit 4. Si no hay conflictos el resultado es el siguiente:
+</p>
+
+<p>
+<img src="../img/LJGrp.png">
+</p>
+
+<p>
+es importante destacar que ya no hay commit 4... tenemos un commit 5 que es "casi casi" como el 4, pero diferente (porque apunta al commit 3, tiene otro padre... y eso ya es suficiente para que sea otro).
+</p>
+
+<p>
+si hay conflictos, vas a tener que corregirlos (la consola te dice bien qué archivos son los que hay que arreglar), agregarlos (usando git add) y finalmente seguir con el rebase (usando git rebase --continue).
+</p>
+
+<p>
+Por último, es necesario subir los cambios al remoto (eso era lo que querías hacer desde el primer momento, no?). Para eso:
+</p>
+
+<p>
+git push<br>
+Y listo!
+</p>
+
+<p>
+Los conflictos existen y van a existir siempre (independientemente de que hagas un commit de merge o no). En lo personal, prefiero evitar los commits de merge a toda costa.
+</p>
+
+<p>
+Y te dejo con una última imagen para que veas por qué puede estar bueno evitar commits de merge... sin commits de merge, la estructura de la branch queda mucho más clara:
+</p>
+
+<p>
+<img src="../img/LF8Ys.png">
+</p>
+
 <br>
 
 
