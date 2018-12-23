@@ -1,17 +1,14 @@
-# Apuntes
-Apuntes de Linux
-
 # Project Title
 
-One Paragraph of project description goes here
+Apuntes de Linux
 
-## Getting Started
+## ¿De que se trata este repositorio?
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Este repositorio contiene notas sobre GNU/Linux y es generado atraves de ZIM Wiki.
 
-### Prerequisites
+### Prequisitos
 
-What things you need to install the software and how to install them
+Sólo necesitas un navegador
 
 ```
 Give examples
