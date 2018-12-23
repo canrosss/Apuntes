@@ -1,4 +1,4 @@
-# Project Title
+# DocGenerator
 
 Apuntes de Linux
 
